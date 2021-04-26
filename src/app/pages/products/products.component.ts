@@ -13,7 +13,7 @@ export class ProductsComponent implements OnInit {
   productName = '';
   editMode = false;
   editId = -1;
-  editCode = 'AA01';
+  editCode = '';
 
   form = new FormGroup({
     code: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
@@ -51,11 +51,12 @@ export class ProductsComponent implements OnInit {
     } else alert("Los datos ingresados no son válidos")
   }
 
-  turnEditMode(id: number): void {
-    const { code, name, price, description } = this.products[id];
-    this.form.setValue({ code, name, price, description });
-    this.editMode = true;
-    this.editId = id;
+  turnEditMode(): void {
+    if (this.editId > -1) {
+      const { code, name, price, description } = this.products[this.editId];
+      this.form.setValue({ code, name, price, description });
+      this.editMode = true;
+    }
   }
 
   editProduct(): void {
@@ -72,12 +73,14 @@ export class ProductsComponent implements OnInit {
     if (this.editId > -1) {
       const product = this.products[this.editId];
       this.products.splice(this.editId, 1);
-      alert(`Se ha eliminado el producto de código: ${product.code}`);
+      alert(`Se ha eliminado el producto ${product.name} de código: ${product.code}`);
     }
     this.form.reset();
+    this.editCode = '';
   }
 
   findByCode(): void {
+    this.editCode = this.editCode.toUpperCase();
     let idx = -1;
     const productExists = this.products.find(p => p.code === this.editCode);
     if (productExists) {
@@ -99,6 +102,22 @@ export class ProductsComponent implements OnInit {
       ];
     }
     this.products = filtered;
+  }
+
+  searchByCode(): void {
+    let filtered = this.products.filter(p => p.code === this.editCode);
+    if (!filtered.length) {
+      filtered = [
+        new Product('AA01', 'Arroz', 1350, ''),
+        new Product('AB95', 'Huevos', 880, ''),
+        new Product('CF34', 'Fideos', 720, ''),
+        new Product('JI76', 'Quinoa', 1780, ''),
+        new Product('GH45', 'Jalea', 100, ''),
+        new Product('ZD37', 'Cereal', 3500, '')
+      ];
+    }
+    this.products = filtered;
+    this.findByCode();
   }
 
 }
