@@ -9,6 +9,8 @@ import { ListComponent } from './pages/list/list.component';
 import { ShipInfoComponent } from './pages/shop/ship-info/ship-info.component';
 import { ProductComponent } from './pages/product/product.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NavbarComponent } from './pages/shared/navbar/navbar.component';
+import { FooterComponent } from './pages/shared/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProductsComponent,
     ListComponent,
     ShipInfoComponent,
-    ProductComponent
+    ProductComponent,
+    NavbarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
