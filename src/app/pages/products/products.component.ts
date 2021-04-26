@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product } from 'src/app/models/Product';
 
 @Component({
@@ -10,8 +11,21 @@ export class ProductsComponent implements OnInit {
 
   products: Product[];
   productName = '';
+  editMode = false;
+  editId = -1;
+  editCode = 'AA01';
 
-  constructor() {
+  form = new FormGroup({
+    code: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+    name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+    price: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.min(1)]),
+    description: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+  });
+
+
+  constructor() { }
+
+  ngOnInit(): void {
     this.products = [
       new Product('AA01', 'Arroz', 1350, ''),
       new Product('AB95', 'Huevos', 880, ''),
@@ -22,15 +36,54 @@ export class ProductsComponent implements OnInit {
     ];
   }
 
-  ngOnInit(): void {
+  get code() { return this.form.get('code'); }
+  get name() { return this.form.get('name'); }
+  get price() { return this.form.get('price'); }
+  get description() { return this.form.get('description'); }
+
+  // CRUD Products
+
+  addProduct(): void {
+    if (this.form.valid) {
+      const { code, name, price, description } = this.form.value;
+      this.products.push(new Product(code, name, price, description));
+      this.form.reset();
+    } else alert("Los datos ingresados no son válidos")
   }
 
-  add(id: number): void {
-    return;
+  turnEditMode(id: number): void {
+    const { code, name, price, description } = this.products[id];
+    this.form.setValue({ code, name, price, description });
+    this.editMode = true;
+    this.editId = id;
   }
 
-  substract(id: number): void {
-    return;
+  editProduct(): void {
+    if (this.editId > -1) {
+      const { code, name, price, description } = this.form.value;
+      this.products[this.editId] = new Product(code, name, price, description);
+      this.editMode = false;
+      this.form.reset();
+    }
+  }
+
+  removeProduct(): void {
+    this.findByCode();
+    if (this.editId > -1) {
+      const product = this.products[this.editId];
+      this.products.splice(this.editId, 1);
+      alert(`Se ha eliminado el producto de código: ${product.code}`);
+    }
+    this.form.reset();
+  }
+
+  findByCode(): void {
+    let idx = -1;
+    const productExists = this.products.find(p => p.code === this.editCode);
+    if (productExists) {
+      idx = this.products.indexOf(productExists);
+    }
+    this.editId = idx;
   }
 
   searchByName(): void {
@@ -45,9 +98,7 @@ export class ProductsComponent implements OnInit {
         new Product('ZD37', 'Cereal', 3500, '')
       ];
     }
-
     this.products = filtered;
   }
-
 
 }
