@@ -1,1 +1,21 @@
-<h2>productos</h2>
+<div class="container">
+    <input type="text" class="form-control" id="search-name" (keyup)="searchByName()" placeholder="Buscar productos..."
+        title="Escribe un nombre" [(ngModel)]="productName">
+    <div class="row row-cols-1 row-cols-md-3 g-4 my-2">
+        <div class="col" *ngFor="let p of products; let id = index">
+            <div class="card h-100 text-center">
+                <img src="https://aldeanativa.cl/wp-content/uploads/f0e94b05-b9f7-458c-b98b-f72c4d2bf68e-7804659650172-not-milk-chocolate-1-lt-notco.jpeg"
+                    class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">{{p.name}}</h5>
+                    <a href="#" class="card-link">Ver producto</a>
+                    <p class="card-text">$ {{p.price | number: '2.'}}</p>
+                    <a href="#" class="btn btn-success">Agregar</a>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted center">Código: </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
