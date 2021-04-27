@@ -7,20 +7,29 @@
                     <div class="col-md-9 mb-3">
                         <label for="address">Dirección</label>
                         <input type="text" class="form-control" id="address" formControlName="address"
-                            placeholder="1234 Main St">
-                        <div *ngIf="address.invalid && (address.dirty || address.touched)">
-                            <div *ngIf="address.errors.required" class="invalid-feedback">Ingrese una dirección válida
+                            placeholder="1234 Main St" *ngIf="currentStep === 0">
+                        <input type="text" class="form-control" id="address" formControlName="address"
+                            placeholder="1234 Main St" *ngIf="currentStep === 1" disabled>
+                        <div *ngIf="shipAddress.invalid && (shipAddress.dirty || shipAddress.touched)">
+                            <div *ngIf="shipAddress.errors.required" class="invalid-feedback">Ingrese una dirección
+                                válida
                             </div>
-                            <div *ngIf="address.errors.minlength" class="invalid-feedback">Debe tener mínimo 3
+                            <div *ngIf="shipAddress.errors.minlength" class="invalid-feedback">Debe tener mínimo 3
                                 caracteres</div>
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="postal">Código postal</label>
                         <input type="text" class="form-control" id="postal" formControlName="postal"
-                            placeholder="123456">
-                        <div class="invalid-feedback">
-                            Ingrese código postal
+                            placeholder="123456" *ngIf="currentStep === 0">
+                        <input type="text" class="form-control" id="postal" formControlName="postal"
+                            placeholder="123456" *ngIf="currentStep === 1" disabled>
+                        <div *ngIf="shipPostal.invalid && (shipPostal.dirty || shipPostal.touched)">
+                            <div *ngIf="shipPostal.errors.required" class="invalid-feedback">Ingrese una código
+                                válido
+                            </div>
+                            <div *ngIf="shipPostal.errors.minlength" class="invalid-feedback">Debe tener mínimo 3
+                                caracteres</div>
                         </div>
                     </div>
                 </div>
@@ -28,17 +37,33 @@
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label for="city">Ciudad</label>
-                        <input type="text" class="form-control" id="city" formControlName="city" placeholder="Santiago">
+                        <input type="text" class="form-control" id="city" formControlName="city" placeholder="Santiago"
+                            *ngIf="currentStep === 0">
+                        <input type="text" class="form-control" id="city" formControlName="city" placeholder="Santiago"
+                            *ngIf="currentStep === 1" disabled>
+                        <div *ngIf="shipCity.invalid && (shipCity.dirty || shipCity.touched)">
+                            <div *ngIf="shipCity.errors.required" class="invalid-feedback">Ingrese una ciudad</div>
+                        </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="region">Región</label>
                         <input type="text" class="form-control" id="region" formControlName="region"
-                            placeholder="Región Metropolitana">
+                            placeholder="Región Metropolitana" *ngIf="currentStep === 0">
+                        <input type="text" class="form-control" id="region" formControlName="region"
+                            placeholder="Región Metropolitana" *ngIf="currentStep === 1" disabled>
+                        <div *ngIf="shipRegion.invalid && (shipRegion.dirty || shipRegion.touched)">
+                            <div *ngIf="shipRegion.errors.required" class="invalid-feedback">Ingrese una región</div>
+                        </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="country">País</label>
                         <input type="text" class="form-control" id="country" formControlName="country"
-                            placeholder="Chile">
+                            placeholder="Chile" *ngIf="currentStep === 0">
+                        <input type="text" class="form-control" id="country" formControlName="country"
+                            placeholder="Chile" *ngIf="currentStep === 1" disabled>
+                        <div *ngIf="shipCountry.invalid && (shipCountry.dirty || shipCountry.touched)">
+                            <div *ngIf="shipCountry.errors.required" class="invalid-feedback">Ingrese un país</div>
+                        </div>
                     </div>
                 </div>
 
@@ -49,53 +74,77 @@
                 </div>
                 <hr class="mb-4">
 
-                <button class="btn btn-primary btn-block" type="button" (click)="checkShipForm()">Guardar</button>
+                <button class="btn btn-primary btn-block" type="button" (click)="checkShipForm()"
+                    *ngIf="currentStep === 0">Guardar</button>
             </form>
         </div>
 
-        <div class="col-md-5 mb-4" *ngIf="currentStep > 0">
+        <div class="col-md-5 mb-4" *ngIf="currentStep === 1">
             <form class="form needs-validation" [formGroup]="cardForm">
 
                 <h4 class="mb-2">Datos de pago</h4>
+
+                <div class="row">
+                    <label for="cc-name">Tipo de tarjeta</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" value="credito" checked>
+                        <label class="form-check-label" for="cc-type">Crédito</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" value="debito">
+                        <label class="form-check-label" for="cc-type">Débito</label>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-xl-6 mb-3">
                         <label for="cc-name">Nombre</label>
                         <input type="text" class="form-control" id="cc-name" formControlName="name" placeholder="">
                         <small class="text-muted">Nombre completo como aparece en la tarjeta</small>
-                        <div class="invalid-feedback">
-                            Name on card is required
+                        <div *ngIf="cardName.invalid && (cardName.dirty || cardName.touched)">
+                            <div *ngIf="cardName.errors.required" class="invalid-feedback">Ingrese un nombre</div>
+                            <div *ngIf="cardName.errors.minlength || cardName.errors.maxlength"
+                                class="invalid-feedback">Debe tener entre 3 y 30 caracteres</div>
                         </div>
                     </div>
                     <div class="col-xl-6 mb-3">
                         <label for="cc-number">Número</label>
                         <input type="text" class="form-control" id="cc-number" formControlName="number" placeholder="">
-                        <div class="invalid-feedback">
-                            Credit card number is required
+                        <div *ngIf="cardNumber.invalid && (cardNumber.dirty || cardNumber.touched)">
+                            <div *ngIf="cardNumber.errors.required || cardNumber.errors.pattern"
+                                class="invalid-feedback">Ingrese un número válido
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="cc-expiration">Fecha de expiración</label>
-                        <input type="text" class="form-control" id="cc-expiration" formControlName="secureCode"
-                            placeholder="567">
-                        <div class="invalid-feedback">
-                            Expiration date required
+                        <input type="text" class="form-control" id="cc-expiration" formControlName="expDate"
+                            placeholder="MM/YY">
+                        <div *ngIf="cardExpDate.invalid && (cardExpDate.dirty || cardExpDate.touched)">
+                            <div *ngIf="cardExpDate.errors.required || cardExpDate.errors.pattern"
+                                class="invalid-feedback">
+                                Ingrese fecha válida en formato MM/YY
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="cc-expiration">CVV</label>
-                        <input type="text" class="form-control" id="cc-cvv" formControlName="expDate"
-                            placeholder="MM/YY">
-                        <div class="invalid-feedback">
-                            Ingrese fecha en formato MM/YY
+                        <input type="number" class="form-control" id="cc-cvv" formControlName="secureCode"
+                            placeholder="567">
+                        <div *ngIf="cardCode.invalid && (cardCode.dirty || cardCode.touched)">
+                            <div *ngIf="cardCode.errors.required || cardCode.errors.min || cardCode.errors.max"
+                                class="invalid-feedback">Ingrese código de 3 dígitos
+                            </div>
                         </div>
                     </div>
                 </div>
                 <hr class="mb-4">
-                <button class="btn btn-success" type="submit">Confirmar pago</button>
+                <button class="btn btn-success" type="button" (click)="checkCardForm()">Confirmar pago</button>
             </form>
         </div>
     </div>
 </div>
+
+<!-- Desde https://getbootstrap.com/docs/4.0/examples/checkout/-->
