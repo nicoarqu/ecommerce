@@ -1,49 +1,52 @@
-<h1 class="title">Listado de productos</h1>
+<div class="container">
+    <h1 class="title">Listado de productos</h1>
 
-<div class="col">
-    <div class="row">
-        <div class="searchbar">
-            <input type="search" name="search-name" id="search-name">
+    <div class="col">
+        <div class="row">
+            <div class="searchbar">
+                <input type="search" name="search-name" id="search-name">
+            </div>
         </div>
     </div>
+
+    <table class="table table-striped my-2" *ngIf="products.length > 0">
+        <thead>
+            <tr>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let p of products; let id = index">
+                <th scope="row" [ngClass]="{'selected-product': quantity[id] > 0}">
+
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-outline-success" (click)="add(id)"><i class="bi bi-plus-circle"></i>
+                        </button>
+                        <button class="btn btn-outline-default disabled">{{quantity[id]}}
+                        </button>
+                        <button class="btn btn-outline-danger" (click)="substract(id)"><i class="bi bi-dash-circle"></i>
+                        </button>
+                    </div>
+                </th>
+                <td [ngClass]="{'selected-product': quantity[id] > 0}">{{p.name | uppercase}}</td>
+                <td [ngClass]="{'selected-product': quantity[id] > 0}">$ {{p.price | number: '2.'}}</td>
+            </tr>
+            <hr>
+            <tr>
+                <th scope="row">Total</th>
+                <td></td>
+                <td></td>
+                <td>$ {{total | currency:'CLP':'symbol'}}</td>
+            </tr>
+            <tr>
+                <th scope="row">Total + IVA</th>
+                <td></td>
+                <td></td>
+                <td>$ {{total * 1.19 | currency:'CLP':'symbol'}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a [routerLink]="['/shop/info']" routerLinkActive="active" class="btn btn-success">Comprar</a>
 </div>
-
-<table class="table table-striped my-2" *ngIf="products.length > 0">
-    <thead>
-        <tr>
-            <th scope="col">Cantidad</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Precio</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let p of products; let id = index">
-            <th scope="row" [ngClass]="{'selected-product': quantity[id] > 0}">
-
-                <div class="btn-group" role="group">
-                    <button class="btn btn-outline-success" (click)="add(id)"><i class="bi bi-plus-circle"></i>
-                    </button>
-                    <button class="btn btn-outline-default disabled">{{quantity[id]}}
-                    </button>
-                    <button class="btn btn-outline-danger" (click)="substract(id)"><i class="bi bi-dash-circle"></i>
-                    </button>
-                </div>
-            </th>
-            <td [ngClass]="{'selected-product': quantity[id] > 0}">{{p.name | uppercase}}</td>
-            <td [ngClass]="{'selected-product': quantity[id] > 0}">$ {{p.price | number: '2.'}}</td>
-        </tr>
-        <hr>
-        <tr>
-            <th scope="row">Total</th>
-            <td></td>
-            <td></td>
-            <td>$ {{total | currency:'CLP':'symbol'}}</td>
-        </tr>
-        <tr>
-            <th scope="row">Total + IVA</th>
-            <td></td>
-            <td></td>
-            <td>$ {{total * 1.19 | currency:'CLP':'symbol'}}</td>
-        </tr>
-    </tbody>
-</table>
