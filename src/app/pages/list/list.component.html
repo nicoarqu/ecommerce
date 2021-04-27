@@ -6,7 +6,8 @@
             <tr>
                 <th scope="col">Cantidad</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">Precio</th>
+                <th scope="col">Precio unidad</th>
+                <th scope="col">Precio total</th>
             </tr>
         </thead>
         <tbody>
@@ -24,7 +25,8 @@
                     </div>
                 </th>
                 <td [ngClass]="{'selected-product': quantity[id] > 0}">{{p.name | uppercase}}</td>
-                <td [ngClass]="{'selected-product': quantity[id] > 0}">$ {{p.price | number: '2.'}}</td>
+                <td [ngClass]="{'selected-product': quantity[id] > 0}">$ {{p.price | number: '1.'}}</td>
+                <td [ngClass]="{'selected-product': quantity[id] > 0}">$ {{p.price * quantity[id] | number: '1.'}}</td>
             </tr>
             <hr>
             <tr>

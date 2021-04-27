@@ -7,9 +7,9 @@
                     <div class="col-md-9 mb-3">
                         <label for="address">Dirección</label>
                         <input type="text" class="form-control" id="address" formControlName="address"
-                            placeholder="1234 Main St" *ngIf="currentStep === 0">
+                            placeholder="Calle 1234 depto 800" *ngIf="currentStep === 0">
                         <input type="text" class="form-control" id="address" formControlName="address"
-                            placeholder="1234 Main St" *ngIf="currentStep === 1" disabled>
+                            placeholder="Calle 1234 depto 800" *ngIf="currentStep === 1" disabled>
                         <div *ngIf="shipAddress.invalid && (shipAddress.dirty || shipAddress.touched)">
                             <div *ngIf="shipAddress.errors.required" class="invalid-feedback">Ingrese una dirección
                                 válida

@@ -22,6 +22,7 @@ export class ProductsComponent implements OnInit {
     name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
     price: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.min(1)]),
     description: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+    url: new FormControl('')
   });
 
 
@@ -41,8 +42,8 @@ export class ProductsComponent implements OnInit {
 
   addProduct(): void {
     if (this.form.valid) {
-      const { code, name, price, description } = this.form.value;
-      this.products.push(new Product(code, name, price, description));
+      const { code, name, price, description, url } = this.form.value;
+      this.products.push(new Product(code, name, price, description, url));
       this.form.reset();
     } else { alert("Los datos ingresados no son válidos"); }
   }

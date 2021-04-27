@@ -10,6 +10,6 @@ export class Product {
         this.name = name;
         this.price = price;
         this.description = description;
-        this.url = url || '';
+        this.url = url || 'https://jumbo.vtexassets.com/arquivos/ids/275354-180-180/Principal-5285.jpg?v=636777999681730000';
     }
 }

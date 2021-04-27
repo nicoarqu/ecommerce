@@ -1,1 +1,20 @@
-<p>product works!</p>
+<div class="container">
+    <a [routerLink]="['/products']" routerLinkActive="active" class="card-link">Volver</a>
+    <div class="row my-2">
+        <div class="col-md-4">
+            <img [src]="product.url" class="card-img-top">
+        </div>
+        <div class="col-md-6">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">{{product.name}}</h5>
+                    <p class="card-text">$ {{product.price | number: '2.'}}</p>
+                    <p class="card-subtitle">{{product.description}}</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted center">Código: {{product.code}}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

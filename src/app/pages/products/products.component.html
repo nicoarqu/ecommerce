@@ -1,9 +1,9 @@
 <div class="container mt-4">
-    <input type="text" class="form-control" id="search-name" (keyup)="searchByName()" placeholder="Buscar productos..."
-        title="Escribe un nombre" [(ngModel)]="productName">
+    <input type="search" class="form-control" id="search-name" (keyup)="searchByName()"
+        placeholder="Buscar productos..." title="Escribe un nombre" [(ngModel)]="productName">
     <div class="row my-2">
         <div class="col-4">
-            <input type="text" class="form-control" id="code" (keyup)="searchByCode()" placeholder="Buscar por código"
+            <input type="search" class="form-control" id="code" (keyup)="searchByCode()" placeholder="Buscar por código"
                 title="Escribe un código" [(ngModel)]="editCode">
         </div>
         <div class="col-4">
@@ -18,8 +18,7 @@
     <div class="row row-cols-1 row-cols-md-3 g-4 my-2">
         <div class="col" *ngFor="let p of filtered; let id = index">
             <div class="card h-100 text-center">
-                <img src="https://aldeanativa.cl/wp-content/uploads/f0e94b05-b9f7-458c-b98b-f72c4d2bf68e-7804659650172-not-milk-chocolate-1-lt-notco.jpeg"
-                    class="card-img-top">
+                <img [src]="p.url" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">{{p.name}}</h5>
                     <a [routerLink]="['/product', p.code]" routerLinkActive="active" class="card-link">Ver
@@ -37,7 +36,7 @@
         <h5 class="h5" *ngIf="!editMode">Agregar producto</h5>
         <h5 class="h5" *ngIf="editMode">Editar producto</h5>
         <form class="form" [formGroup]="form">
-            <div class="form-group row">
+            <div class="form-group row my-2">
                 <label for="code" class="col-4 col-form-label">Código</label>
                 <div class="col-8">
                     <input type="text" name="code" class="form-control" formControlName="code">
@@ -48,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row  my-2">
                 <label for="name" class="col-4 col-form-label">Nombre</label>
                 <div class="col-8">
                     <input type="text" name="name" class="form-control" formControlName="name">
@@ -59,7 +58,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row my-2">
                 <label for="price" class="col-4 col-form-label">Precio</label>
                 <div class="col-8">
                     <input type="number" name="price" class="form-control" formControlName="price" min="1">
@@ -71,10 +70,10 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row my-2">
                 <label for="description" class="col-4 col-form-label">Descripción</label>
                 <div class="col-8">
-                    <input type="text" name="description" class="form-control" formControlName="description">
+                    <textarea name="description" class="form-control" formControlName="description" rows="3"></textarea>
                     <div *ngIf="description.invalid && (description.dirty || description.touched)"
                         class="alert alert-danger">
                         <p *ngIf="description.errors.required">Por favor ingrese una descripción</p>
@@ -83,9 +82,14 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col-4"></div>
-                <div class="input-group col-8">
+            <div class="form-group row my-2">
+                <label for="description" class="col-4 col-form-label">URL de imagen (opcional)</label>
+                <div class="col-8">
+                    <input type="text" name="url" class="form-control" formControlName="url">
+                </div>
+            </div>
+            <div class="form-group row my-2">
+                <div class="input-group col-8 offset-4">
                     <button *ngIf="!editMode" type="button" class="btn btn-outline-success btn-block"
                         (click)="addProduct()">Guardar</button>
                     <button *ngIf="editMode" type="button" class="btn btn-outline-success btn-blocky"
