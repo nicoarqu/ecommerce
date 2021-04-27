@@ -1,13 +1,5 @@
-<div class="container">
-    <h1 class="title">Listado de productos</h1>
-
-    <div class="col">
-        <div class="row">
-            <div class="searchbar">
-                <input type="search" name="search-name" id="search-name">
-            </div>
-        </div>
-    </div>
+<div class="container my-3">
+    <h3 class="title">Listado de productos</h3>
 
     <table class="table table-striped my-2" *ngIf="products.length > 0">
         <thead>
@@ -24,7 +16,8 @@
                     <div class="btn-group" role="group">
                         <button class="btn btn-outline-success" (click)="add(id)"><i class="bi bi-plus-circle"></i>
                         </button>
-                        <button class="btn btn-outline-default disabled">{{quantity[id]}}
+                        <button class="btn btn-outline-default disabled"
+                            [ngClass]="{'selected-product': quantity[id] > 0}">{{quantity[id]}}
                         </button>
                         <button class="btn btn-outline-danger" (click)="substract(id)"><i class="bi bi-dash-circle"></i>
                         </button>

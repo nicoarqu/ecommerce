@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/Product';
+import { ProductsService } from 'src/app/products.service';
 
 @Component({
   selector: 'app-list',
@@ -11,17 +12,16 @@ export class ListComponent implements OnInit {
   products: Product[];
   quantity: number[];
   total = 0;
+  cart: {};
 
-  constructor() {
-    this.products = [
-      new Product('AA01', 'Arroz', 1350, ''),
-      new Product('AB95', 'Huevos', 880, ''),
-      new Product('CF345', 'Fideos', 720, ''),
-      new Product('JI76', 'Quinoa', 1780, ''),
-      new Product('GH45', 'Jalea', 100, ''),
-      new Product('ZD37', 'Cereal', 3500, '')
-    ];
-    this.quantity = [0, 0, 0, 0, 0, 0];
+  constructor(private db: ProductsService) {
+    this.cart = this.db.getCart();
+    this.products = this.db.getProducts();
+    this.quantity = this.products.map(p => {
+      const qty = this.cart[p.code];
+      if (!qty) { return 0; }
+      else { return qty; }
+    });
   }
 
   ngOnInit(): void {

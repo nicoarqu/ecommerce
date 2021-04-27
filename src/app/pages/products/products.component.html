@@ -1,7 +1,7 @@
 <div class="container mt-4">
     <input type="text" class="form-control" id="search-name" (keyup)="searchByName()" placeholder="Buscar productos..."
         title="Escribe un nombre" [(ngModel)]="productName">
-    <div class="row">
+    <div class="row my-2">
         <div class="col-4">
             <input type="text" class="form-control" id="code" (keyup)="searchByCode()" placeholder="Buscar por código"
                 title="Escribe un código" [(ngModel)]="editCode">
@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="row row-cols-1 row-cols-md-3 g-4 my-2">
-        <div class="col" *ngFor="let p of products; let id = index">
+        <div class="col" *ngFor="let p of filtered; let id = index">
             <div class="card h-100 text-center">
                 <img src="https://aldeanativa.cl/wp-content/uploads/f0e94b05-b9f7-458c-b98b-f72c4d2bf68e-7804659650172-not-milk-chocolate-1-lt-notco.jpeg"
                     class="card-img-top">
